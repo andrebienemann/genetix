@@ -1,0 +1,8 @@
+site_name: Genetix
+theme:
+  name: material
+  logo: assets/logo.png
+  favicon: assets/favicon.png
+  palette:
+    primary: green
+    accent: light green
