@@ -1,0 +1,9 @@
+*.pyc
+
+genetix.egg-info/
+venv/
+build/
+dist/
+site/
+
+.coverage
