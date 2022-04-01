@@ -20,36 +20,26 @@ COMMAND_TEMPLATE := "  \033[36m%s\033[0m %s\n"
 .PHONY: help
 help all:
 	@echo "Available Commands:"; \
-	printf $(COMMAND_TEMPLATE) "setup" "Setup the project" ; \
-	printf $(COMMAND_TEMPLATE) "format" "Format the source code"; \
-	printf $(COMMAND_TEMPLATE) "unit-tests" "Execute unit tests"; \
-	printf $(COMMAND_TEMPLATE) "py-coverage" "Display coverage for Python code"; \
-	printf $(COMMAND_TEMPLATE) "c-coverage" "Display coverage for C code"; \
-	printf $(COMMAND_TEMPLATE) "memory-tests" "Execute memory tests"; \
-	printf $(COMMAND_TEMPLATE) "build-lib" "Build the library"; \
-	printf $(COMMAND_TEMPLATE) "publish-lib" "Publish the library on PyPI"; \
-	printf $(COMMAND_TEMPLATE) "serve-docs" "Server the documentation locally"; \
-	printf $(COMMAND_TEMPLATE) "build-docs" "Build the documentation website"; \
-	printf $(COMMAND_TEMPLATE) "deploy-docs" "Deploy the documentation"; \
-	
+	grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | \
+	awk 'BEGIN {FS = ":.*?## "}; {printf $(COMMAND_TEMPLATE), $$1, $$2}'; \
 
 # SETUP
 .PHONY: setup
-setup:
+setup: ## Setup the project
 	@virtualenv -p python3 $(ROOT)/venv; \
 	source $(ROOT)/venv/bin/activate; \
 	pip install -r requirements.txt; \
 
 # FORMAT
 .PHONY: format
-format:
+format: ## Format the source code
 	@source $(ROOT)/venv/bin/activate; \
 	black $(ROOT)/genetix $(ROOT)/tests $(ROOT)/setup.py; \
 	isort --profile black $(ROOT)/genetix $(ROOT)/tests; \
 
 # UNIT TESTS
 .PHONY: unit-tests
-unit-tests:
+unit-tests: ## Execute unit tests
 	@source $(ROOT)/venv/bin/activate; \
 	export $(CFLAGS_COVERAGE); \
 	python $(ROOT)/setup.py build_ext --inplace; \
@@ -58,7 +48,7 @@ unit-tests:
 
 # PYTHON COVERAGE
 .PHONY: py-coverage
-py-coverage:
+py-coverage: ## Display coverage for Python code
 	@source $(ROOT)/venv/bin/activate; \
 	echo $(DIVIDER_STRING); \
 	echo $(PY_COVERAGE_STRING); \
@@ -68,13 +58,13 @@ py-coverage:
 
 # C COVERAGE
 .PHONY: c-coverage
-c-coverage:
+c-coverage: ## Display coverage for C code
 	@source $(ROOT)/venv/bin/activate; \
 	gcovr; \
 
 # MEMORY TESTS
 .PHONY: memory-tests
-memory-tests:
+memory-tests: ## Execute memory tests
 	@source $(ROOT)/venv/bin/activate; \
 	python $(ROOT)/setup.py build_ext --inplace; \
 	cd $(ROOT)/tests/memory; \
@@ -84,33 +74,32 @@ memory-tests:
 
 # BUILD LIBRARY
 .PHONY: build-lib
-build-lib:
-	@ \
-	source $(ROOT)/venv/bin/activate; \
+build-lib: ## Build the library
+	@source $(ROOT)/venv/bin/activate; \
 	export $(CFLAGS_OPTIMISATION); \
 	python $(ROOT)/setup.py build; \
 
 # PUBLISH LIBRARY
 .PHONY: publish-lib
-publish-lib:
+publish-lib: ## Publish the library on PyPI
 	@source $(ROOT)/venv/bin/activate; \
 	python $(ROOT)/setup.py sdist bdist_wheel; \
 	twine upload $(ROOT)/dist/*; \
 
 # SERVE DOCUMENTATION
 .PHONY: serve-docs
-serve-docs:
+serve-docs: ## Server the documentation locally
 	@source $(ROOT)/venv/bin/activate; \
 	mkdocs serve; \
 
 # BUILD DOCUMENTATION
 .PHONY: build-docs
-build-docs:
+build-docs: ## Build the documentation website
 	@source $(ROOT)/venv/bin/activate; \
 	mkdocs build; \
 
 # DEPLOY DOCUMENTATION
 .PHONY: deploy-docs
-deploy-docs:
+deploy-docs: ## Deploy the documentation
 	@source $(ROOT)/venv/bin/activate; \
 	mkdocs gh-deploy --force; \
