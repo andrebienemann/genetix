@@ -7,109 +7,91 @@ static PyMethodDef methods[] = {
         "afreq",
         (PyCFunction)afreq_wrapper,
         METH_VARARGS,
-        "",
     },
     {
         "all_contain",
         (PyCFunction)all_contain_wrapper,
         METH_VARARGS,
-        "",
     },
     {
         "cbase",
         (PyCFunction)cbase_wrapper,
         METH_VARARGS,
-        "",
     },
     {
         "complement",
         (PyCFunction)complement_wrapper,
         METH_VARARGS,
-        "",
     },
     {
         "ctable",
         (PyCFunction)ctable_wrapper,
         METH_VARARGS,
-        "",
     },
     {
         "delete",
         (PyCFunction)delete_wrapper,
         METH_VARARGS,
-        "",
     },
     {
         "is_dna",
         (PyCFunction)is_dna_wrapper,
         METH_VARARGS,
-        "",
     },
     {
         "is_protein",
         (PyCFunction)is_protein_wrapper,
         METH_VARARGS,
-        "",
     },
     {
         "is_rna",
         (PyCFunction)is_rna_wrapper,
         METH_VARARGS,
-        "",
     },
     {
         "mass",
         (PyCFunction)mass_wrapper,
         METH_VARARGS,
-        "",
     },
     {
         "mtable",
         (PyCFunction)mtable_wrapper,
         METH_VARARGS,
-        "",
     },
     {
         "reverse",
         (PyCFunction)reverse_wrapper,
         METH_VARARGS,
-        "",
     },
     {
         "reverse_complement",
         (PyCFunction)reverse_complement_wrapper,
         METH_VARARGS,
-        "",
     },
     {
         "shortest_seq",
         (PyCFunction)shortest_seq_wrapper,
         METH_VARARGS,
-        "",
     },
     {
         "transcribe",
         (PyCFunction)transcribe_wrapper,
         METH_VARARGS,
-        "",
     },
     {
         "transcribe_back",
         (PyCFunction)transcribe_back_wrapper,
         METH_VARARGS,
-        "",
     },
     {
         "translate_dna",
         (PyCFunction)translate_dna_wrapper,
         METH_VARARGS,
-        "",
     },
     {
         "translate_rna",
         (PyCFunction)translate_rna_wrapper,
         METH_VARARGS,
-        "",
     },
     {
         NULL,
@@ -128,6 +110,5 @@ static struct PyModuleDef module_def = {
 };
 
 PyMODINIT_FUNC PyInit_seq(void) {
-    PyMODINIT_FUNC module = PyModule_Create(&module_def);
-    return module;
+    return PyModule_Create(&module_def);
 }
