@@ -1,4 +1,4 @@
-def parse_fasta(fasta: str) -> tuple:
+def parse_fasta(fasta: str) -> list:
     """
     Given a string in a FASTA format returns a collection of tuples
     containing the sequence label and the sequence itself.
